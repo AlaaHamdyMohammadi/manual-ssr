@@ -1,11 +1,16 @@
+const { readFileSync } = require("fs");
 const { createServer } = require("http");
 const { parse } = require("url");
+
+
+const htmlTemplete = readFileSync(`${__dirname}/index.html`, "utf-8");
 
 const server = createServer((req, res) => {
   const pathName = parse(req.url, true).pathname;
   console.log(pathName);
   if (pathName === "/") {
-    res.end("Hello world!");
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(htmlTemplete);
   } else if (pathName === "/test") {
     res.end("Hello test!");
   }else{
